@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import UserService from '../services/UserService';
 import mapStatusHTTP from '../utils/mapStatusHTTP';
 import generateToken from '../utils/generateToken';
+import { IUser } from '../interfaces/users/IUser';
 
 export default class TeamController {
   private userService: UserService;
@@ -17,10 +18,11 @@ export default class TeamController {
     if (status !== 'SUCCESSFUL') {
       return res.status(mapStatusHTTP(status)).json(data);
     }
-    if (!compareSync(password, data.password)) {
+    const { id, username, role, email: useEmail, password: usePassword } = data as IUser;
+    if (!compareSync(password, usePassword)) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-    const { id, username, role, email: useEmail, password: usePassword } = data;
+
     const token = generateToken({ id, username, role, email: useEmail, password: usePassword });
     return res.status(mapStatusHTTP(status)).json({ token });
   }
