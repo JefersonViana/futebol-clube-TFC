@@ -16,4 +16,17 @@ router.patch(
   ValidateToken.validateToken,
   (req: Request, res: Response) => matchesController.update(req, res),
 );
+
+router.patch(
+  '/:id',
+  ValidateToken.validateToken,
+  (req: Request, res: Response) => matchesController.updateMatchInProgress(req, res),
+);
+
+router.post(
+  '/',
+  ValidateToken.validateToken,
+  (req: Request, res: Response) => matchesController.insert(req, res),
+);
+
 export default router;

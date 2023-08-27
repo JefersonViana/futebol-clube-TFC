@@ -7,8 +7,8 @@ import matchesRouter from './matches.routes';
 const router = Router();
 
 router.use('/teams', teamRouter);
+router.use('/matches', matchesRouter);
 router.use('/login', userRouter);
 router.use('/login/role', loginRouter);
-router.use('/matches', matchesRouter);
 
 export default router;

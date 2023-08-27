@@ -2,11 +2,12 @@ import { IMatches } from '../interfaces/matches/IMatches';
 import { IMatchesModel } from '../interfaces/matches/IMatchesModel';
 import SequelizeMatches from '../database/models/MatchesModel';
 import SequelizeTeam from '../database/models/SequelizeTeam';
+import { InsertMatch, Match } from '../types/matchRequest';
 
 export default class MatchesModel implements IMatchesModel {
   private model = SequelizeMatches;
 
-  async findAll(): Promise<IMatches[]> {
+  public async findAll(): Promise<IMatches[]> {
     const dbData = await this.model.findAll({
       include: [
         { model: SequelizeTeam, as: 'homeTeam', attributes: { exclude: ['id'] } },
@@ -16,7 +17,7 @@ export default class MatchesModel implements IMatchesModel {
     return dbData;
   }
 
-  async filterMatches(inProgress:string): Promise<IMatches[]> {
+  public async filterMatches(inProgress:string): Promise<IMatches[]> {
     const dbData = await this.model.findAll({
       where: { inProgress: inProgress === 'false' ? 0 : 1 },
       include: [
@@ -27,9 +28,23 @@ export default class MatchesModel implements IMatchesModel {
     return dbData;
   }
 
-  async update(id: number): Promise<unknown> {
+  public async update(id: number): Promise<unknown> {
     const dbData = await this.model.update({ inProgress: false }, {
       where: { id },
+    });
+    return dbData;
+  }
+
+  public async updateMatchInProgress(id: number, data: Match): Promise<void> {
+    await this.model.update(data, {
+      where: { id },
+    });
+  }
+
+  public async insert(data: InsertMatch): Promise<InsertMatch> {
+    const dbData = await this.model.create({
+      inProgress: true,
+      ...data,
     });
     return dbData;
   }
