@@ -26,4 +26,11 @@ export default class MatchesModel implements IMatchesModel {
     });
     return dbData;
   }
+
+  async update(id: number): Promise<unknown> {
+    const dbData = await this.model.update({ inProgress: false }, {
+      where: { id },
+    });
+    return dbData;
+  }
 }
