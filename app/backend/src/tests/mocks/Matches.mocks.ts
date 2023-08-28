@@ -1350,3 +1350,12 @@ export const allMatchesWithFilteredTrue = [
     }
   }
 ]
+
+export const createMatch = {
+  id: 49,
+  inProgress: true,
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+}

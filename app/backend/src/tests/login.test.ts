@@ -27,7 +27,7 @@ describe('Login tests', () => {
   it('must return status code 200 when the token is valid', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(userAdmin as any);
     const { status, body } = await chai.request(app).get('/login/role')
-      .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJBZG1pbiIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGFzc3dvcmQiOiIkMmEkMDgkeGkuSHhrMWN6QU8wblpSLi5CMzkzdTEwYUVEMFJRMU4zUEFFWFE3SHh0TGpLUEVaQnUuUFciLCJpYXQiOjE2OTMwNjYyNTYsImV4cCI6MTY5MzE1MjY1Nn0.yvfmNgPoG6gdo5TgmAmIkKJeCHnCqVWDHiRZ10huu3s');
+      .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJBZG1pbiIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGFzc3dvcmQiOiIkMmEkMDgkeGkuSHhrMWN6QU8wblpSLi5CMzkzdTEwYUVEMFJRMU4zUEFFWFE3SHh0TGpLUEVaQnUuUFciLCJpYXQiOjE2OTMyMjQwMjgsImV4cCI6MTY5MzMxMDQyOH0.nXO7WGw1oaVNg9lw4gEV4g6p6tai45NEJ4bpnwgON5w');
     
     expect(status).to.be.equal(200);
     expect(body.role).to.be.equal('admin');

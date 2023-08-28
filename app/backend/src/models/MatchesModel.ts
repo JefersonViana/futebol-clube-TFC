@@ -28,11 +28,10 @@ export default class MatchesModel implements IMatchesModel {
     return dbData;
   }
 
-  public async update(id: number): Promise<unknown> {
-    const dbData = await this.model.update({ inProgress: false }, {
+  public async update(id: number): Promise<void> {
+    await this.model.update({ inProgress: false }, {
       where: { id },
     });
-    return dbData;
   }
 
   public async updateMatchInProgress(id: number, data: Match): Promise<void> {
