@@ -9,8 +9,9 @@ export default class ClassificationController {
   }
 
   public async getClassifications(req: Request, res: Response):Promise<Response> {
-    const url = req.baseUrl.includes('home');
-    const { data } = await this.classificationService.getClassifications(url);
+    const url = req.baseUrl.split('/');
+    const { data } = await this.classificationService
+      .getClassifications(url[2] === undefined ? 'leaderboard' : url[2]);
     return res.status(200).json(data);
   }
 }

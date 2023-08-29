@@ -22,10 +22,17 @@ export default class ClassificationService {
     this.arrayFromArray = [];
   }
 
-  private constructorArrayFromArray(url: boolean) {
+  private constructorArrayFromArray(url: string) {
+    if (url === 'leaderboard') {
+      return this.teamsNameInDatabase.map((nameTime) => (
+        this.arrayTeams.filter((team) => (
+          team.homeTeam.teamName === nameTime || team.awayTeam.teamName === nameTime
+        ))
+      ));
+    }
     return this.teamsNameInDatabase.map((nameTime) => (
       this.arrayTeams.filter((team) => (
-        url ? team.homeTeam.teamName === nameTime : team.awayTeam.teamName === nameTime
+        url === 'home' ? team.homeTeam.teamName === nameTime : team.awayTeam.teamName === nameTime
       ))
     ));
   }
@@ -96,7 +103,7 @@ export default class ClassificationService {
   //   return 0;
   // });
 
-  public async getClassifications(url: boolean) {
+  public async getClassifications(url: string) {
     this.arrayTeams = await this.matchesModel.filterMatches('false') as Team[];
     this.teamsNameInDatabase = (await this.teamsModel.findAll()).map((team) => team.teamName);
     this.arrayFromArray = this.constructorArrayFromArray(url);
