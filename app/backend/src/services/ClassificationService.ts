@@ -22,10 +22,10 @@ export default class ClassificationService {
     this.arrayFromArray = [];
   }
 
-  private constructorArrayFromArray() {
+  private constructorArrayFromArray(url: boolean) {
     return this.teamsNameInDatabase.map((nameTime) => (
       this.arrayTeams.filter((team) => (
-        team.homeTeam.teamName === nameTime
+        url ? team.homeTeam.teamName === nameTime : team.awayTeam.teamName === nameTime
       ))
     ));
   }
@@ -96,10 +96,10 @@ export default class ClassificationService {
   //   return 0;
   // });
 
-  public async getClassifications() {
+  public async getClassifications(url: boolean) {
     this.arrayTeams = await this.matchesModel.filterMatches('false') as Team[];
     this.teamsNameInDatabase = (await this.teamsModel.findAll()).map((team) => team.teamName);
-    this.arrayFromArray = this.constructorArrayFromArray();
+    this.arrayFromArray = this.constructorArrayFromArray(url);
     const classification = this.classification().sort((a, b) => {
       if (a.totalPoints > b.totalPoints) return -1;
       if (a.totalPoints < b.totalPoints) return 1;

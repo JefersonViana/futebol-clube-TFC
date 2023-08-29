@@ -8,8 +8,9 @@ export default class ClassificationController {
     this.classificationService = new ClassificationService();
   }
 
-  public async getClassifications(_req: Request, res: Response):Promise<Response> {
-    const { data } = await this.classificationService.getClassifications();
+  public async getClassifications(req: Request, res: Response):Promise<Response> {
+    const url = req.baseUrl.includes('home');
+    const { data } = await this.classificationService.getClassifications(url);
     return res.status(200).json(data);
   }
 }
